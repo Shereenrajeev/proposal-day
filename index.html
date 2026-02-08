@@ -1,109 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Just One Question 💕</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Comic Sans MS', cursive;
-      background: linear-gradient(to bottom, #ffb6c1, #ffe4e1);
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-      text-align: center;
-    }
+<meta charset="UTF-8">
+<title>Just Choose 😏</title>
 
-    .box {
-      background: rgba(255,255,255,0.3);
-      padding: 40px;
-      border-radius: 20px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    }
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    font-family: 'Comic Sans MS', cursive;
+    background: linear-gradient(135deg, #ff4d6d, #ff9a9e);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+  }
 
-    h1 {
-      font-size: 2.5rem;
-      color: #fff;
-    }
+  .box {
+    background: rgba(255,255,255,0.2);
+    padding: 35px;
+    border-radius: 25px;
+    width: 90%;
+    max-width: 420px;
+  }
 
-    button {
-      margin-top: 20px;
-      padding: 15px 30px;
-      font-size: 1.2rem;
-      border: none;
-      border-radius: 30px;
-      cursor: pointer;
-      background: #ff4d6d;
-      color: white;
-    }
+  h1 {
+    font-size: 1.6rem;
+    margin-bottom: 25px;
+  }
 
-    button:hover {
-      background: #ff1e4d;
-    }
+  .option {
+    background: #ff1e4d;
+    margin: 15px 0;
+    padding: 18px;
+    border-radius: 30px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: 0.3s;
+  }
 
-    #answer {
-      display: none;
-      font-size: 3rem;
-      color: white;
-      margin-top: 30px;
-      animation: fly 2s ease forwards;
-    }
+  .option:hover {
+    background: #c9183a;
+    transform: scale(1.05);
+  }
 
-    @keyframes fly {
-      from {
-        transform: translateY(200px);
-        opacity: 0;
-      }
-      to {
-        transform: translateY(0);
-        opacity: 1;
-      }
-    }
+  #final {
+    display: none;
+    animation: fadeIn 2s ease forwards;
+  }
 
-    .heart {
-      position: absolute;
-      font-size: 2rem;
-      animation: float 5s linear infinite;
-    }
-
-    @keyframes float {
-      0% {
-        transform: translateY(0);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(-600px);
-        opacity: 0;
-      }
-    }
-  </style>
+  @keyframes fadeIn {
+    from {opacity: 0; transform: translateY(40px);}
+    to {opacity: 1; transform: translateY(0);}
+  }
+</style>
 </head>
+
 <body>
 
-  <div class="box">
-    <h1>Do you know who loves you the most? 🤭</h1>
-    <button onclick="showLove()">Reveal Answer</button>
-    <div id="answer">ME 😌❤️<br>I LOVE YOUUUU ❤️❤️❤️</div>
-  </div>
+<div class="box" id="game">
+  <h1>Just choose 😌</h1>
+  <div class="option" onclick="pick(0)"></div>
+  <div class="option" onclick="pick(1)"></div>
+</div>
 
-  <script>
-    function showLove() {
-      document.getElementById("answer").style.display = "block";
+<div class="box" id="final">
+  <h1>🫢 Your choices</h1>
+  <p id="answers"></p>
 
-      for (let i = 0; i < 25; i++) {
-        const heart = document.createElement("div");
-        heart.innerHTML = "❤️";
-        heart.classList.add("heart");
-        heart.style.left = Math.random() * window.innerWidth + "px";
-        heart.style.bottom = "0px";
-        document.body.appendChild(heart);
+  <h2>Today is Proposal Day 💍</h2>
+  <p>
+    I love you so much ❤️<br><br>
+    When we meet…<br>
+    <b>I’ll do EVERYTHING you chose</b> 😏🔥
+  </p>
+</div>
 
-        setTimeout(() => heart.remove(), 5000);
-      }
-    }
-  </script>
+<script>
+const rounds = [
+  ["Morning sex", "Middle of the night sex"],
+  ["Soft kisses 😘", "Don’t stop kissing 😈"],
+  ["Bj 🤍", "Hj"]
+];
+
+let step = 0;
+let chosen = [];
+
+function loadRound() {
+  document.querySelectorAll(".option")[0].innerText = rounds[step][0];
+  document.querySelectorAll(".option")[1].innerText = rounds[step][1];
+}
+
+function pick(choice) {
+  chosen.push(rounds[step][choice]);
+  step++;
+
+  if (step < rounds.length) {
+    loadRound();
+  } else {
+    localStorage.setItem("hisChoices", JSON.stringify(chosen));
+    showFinal();
+  }
+}
+
+function showFinal() {
+  document.getElementById("game").style.display = "none";
+  document.getElementById("final").style.display = "block";
+
+  let text = "";
+  chosen.forEach((c, i) => {
+    text += ${i+1}️⃣ ${c}<br>;
+  });
+  document.getElementById("answers").innerHTML = text;
+}
+
+loadRound();
+</script>
 
 </body>
 </html>
