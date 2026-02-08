@@ -18,26 +18,28 @@
   }
 
   .box {
-    background: rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.25);
     padding: 35px;
     border-radius: 25px;
     width: 90%;
     max-width: 420px;
+    backdrop-filter: blur(8px);
   }
 
   h1 {
-    font-size: 1.6rem;
+    font-size: 1.7rem;
     margin-bottom: 25px;
   }
 
   .option {
     background: #ff1e4d;
-    margin: 15px 0;
+    margin: 18px 0;
     padding: 18px;
     border-radius: 30px;
     font-size: 1.2rem;
     cursor: pointer;
-    transition: 0.3s;
+    transition: 0.25s;
+    user-select: none;
   }
 
   .option:hover {
@@ -47,7 +49,7 @@
 
   #final {
     display: none;
-    animation: fadeIn 2s ease forwards;
+    animation: fadeIn 1.8s ease forwards;
   }
 
   @keyframes fadeIn {
@@ -60,9 +62,9 @@
 <body>
 
 <div class="box" id="game">
-  <h1>Just choose 😌</h1>
-  <div class="option" onclick="pick(0)"></div>
-  <div class="option" onclick="pick(1)"></div>
+  <h1 id="title">Just choose 😌</h1>
+  <div class="option" id="optA"></div>
+  <div class="option" id="optB"></div>
 </div>
 
 <div class="box" id="final">
@@ -79,18 +81,24 @@
 
 <script>
 const rounds = [
-  ["Morning sex", "Middle of the night sex"],
+  ["Sneaky quickie😛", "Planned🫢"],
   ["Soft kisses 😘", "Don’t stop kissing 😈"],
-  ["Bj 🤍", "Hj"]
+  ["Bj ", "Hj"]
 ];
 
 let step = 0;
 let chosen = [];
 
+const optA = document.getElementById("optA");
+const optB = document.getElementById("optB");
+
 function loadRound() {
-  document.querySelectorAll(".option")[0].innerText = rounds[step][0];
-  document.querySelectorAll(".option")[1].innerText = rounds[step][1];
+  optA.innerText = rounds[step][0];
+  optB.innerText = rounds[step][1];
 }
+
+optA.onclick = () => pick(0);
+optB.onclick = () => pick(1);
 
 function pick(choice) {
   chosen.push(rounds[step][choice]);
@@ -115,10 +123,10 @@ function showFinal() {
   document.getElementById("answers").innerHTML = text;
 }
 
+// LOAD FIRST ROUND (THIS WAS THE MISSING PART)
 loadRound();
 </script>
 
 </body>
 </html>
-
   
