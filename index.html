@@ -5,126 +5,86 @@
 <title>Just Choose 😏</title>
 
 <style>
-  body {
-    margin: 0;
-    height: 100vh;
-    font-family: 'Comic Sans MS', cursive;
-    background: linear-gradient(135deg, #ff4d6d, #ff9a9e);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    text-align: center;
-  }
+body {
+  margin: 0;
+  height: 100vh;
+  font-family: 'Comic Sans MS', cursive;
+  background: linear-gradient(135deg, #ff4d6d, #ff9a9e);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
+}
 
-  .box {
-    background: rgba(255,255,255,0.25);
-    padding: 35px;
-    border-radius: 25px;
-    width: 90%;
-    max-width: 420px;
-    backdrop-filter: blur(8px);
-  }
+.box {
+  background: rgba(255,255,255,0.25);
+  padding: 35px;
+  border-radius: 25px;
+  width: 90%;
+  max-width: 420px;
+}
 
-  h1 {
-    font-size: 1.7rem;
-    margin-bottom: 25px;
-  }
-
-  .option {
-    background: #ff1e4d;
-    margin: 18px 0;
-    padding: 18px;
-    border-radius: 30px;
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: 0.25s;
-    user-select: none;
-  }
-
-  .option:hover {
-    background: #c9183a;
-    transform: scale(1.05);
-  }
-
-  #final {
-    display: none;
-    animation: fadeIn 1.8s ease forwards;
-  }
-
-  @keyframes fadeIn {
-    from {opacity: 0; transform: translateY(40px);}
-    to {opacity: 1; transform: translateY(0);}
-  }
+.option {
+  background: #ff1e4d;
+  margin: 18px 0;
+  padding: 18px;
+  border-radius: 30px;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+.option:active {
+  transform: scale(0.97);
+}
 </style>
 </head>
 
 <body>
 
-<div class="box" id="game">
-  <h1 id="title">Just choose 😌</h1>
-  <div class="option" id="optA"></div>
-  <div class="option" id="optB"></div>
-</div>
-
-<div class="box" id="final">
-  <h1>🫢 Your choices</h1>
-  <p id="answers"></p>
-
-  <h2>Today is Proposal Day 💍</h2>
-  <p>
-    I love you so much ❤️<br><br>
-    When we meet…<br>
-    <b>I’ll do EVERYTHING you chose</b> 😏🔥
-  </p>
+<div class="box" id="screen">
+  <h2>Just choose 😌</h2>
+  <div class="option" onclick="pick(0)">Pull me closer 😏</div>
+  <div class="option" onclick="pick(1)">Let me tease you slowly 🫢</div>
 </div>
 
 <script>
-const rounds = [
-  ["Sneaky quickie😛", "Planned🫢"],
-  ["Soft kisses 😘", "Don’t stop kissing 😈"],
-  ["Bj ", "Hj"]
-];
-
 let step = 0;
 let chosen = [];
 
-const optA = document.getElementById("optA");
-const optB = document.getElementById("optB");
-
-function loadRound() {
-  optA.innerText = rounds[step][0];
-  optB.innerText = rounds[step][1];
-}
-
-optA.onclick = () => pick(0);
-optB.onclick = () => pick(1);
+const rounds = [
+  ["Pull me closer 😏", "Let me tease you slowly 🫢"],
+  ["Soft kisses 😘", "Don’t stop kissing 😈"],
+  ["Late-night cuddles 🤍", "No sleep, only us 😏"]
+];
 
 function pick(choice) {
   chosen.push(rounds[step][choice]);
   step++;
 
   if (step < rounds.length) {
-    loadRound();
+    document.getElementById("screen").innerHTML = `
+      <h2>Just choose 😌</h2>
+      <div class="option" onclick="pick(0)">${rounds[step][0]}</div>
+      <div class="option" onclick="pick(1)">${rounds[step][1]}</div>
+    `;
   } else {
-    localStorage.setItem("hisChoices", JSON.stringify(chosen));
-    showFinal();
+    let result = "";
+    chosen.forEach((c, i) => {
+      result += ${i+1}️⃣ ${c}<br>;
+    });
+
+    document.getElementById("screen").innerHTML = `
+      <h2>🫢 Your choices</h2>
+      <p>${result}</p>
+      <h3>Today is Proposal Day 💍</h3>
+      <p>
+        I love you so much ❤️<br><br>
+        When we meet…<br>
+        <b>I’ll do EVERYTHING you chose</b> 😏🔥
+      </p>
+    `;
   }
 }
-
-function showFinal() {
-  document.getElementById("game").style.display = "none";
-  document.getElementById("final").style.display = "block";
-
-  let text = "";
-  chosen.forEach((c, i) => {
-    text += ${i+1}️⃣ ${c}<br>;
-  });
-  document.getElementById("answers").innerHTML = text;
-}
-
-// LOAD FIRST ROUND (THIS WAS THE MISSING PART)
-loadRound();
 </script>
 
 </body>
