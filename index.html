@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Proposal Day 💖</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Comic Sans MS', cursive;
+      background: linear-gradient(to top right, #ff9a9e, #fad0c4);
+      text-align: center;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: 3rem;
+      color: #fff;
+      margin-top: 40px;
+    }
+
+    #game {
+      margin-top: 30px;
+      font-size: 1.5rem;
+      color: white;
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 2.5rem;
+      cursor: pointer;
+      animation: fall 5s linear;
+    }
+
+    @keyframes fall {
+      0% { top: -50px; }
+      100% { top: 100vh; }
+    }
+
+    #proposal {
+      display: none;
+      font-size: 3rem;
+      color: #fff;
+      animation: fly 2s ease-in-out forwards;
+    }
+
+    @keyframes fly {
+      from {
+        transform: translateY(300px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .floating {
+      position: absolute;
+      font-size: 2rem;
+      animation: floatUp 6s infinite;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(-600px); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Hey Love 😘</h1>
+  <div id="game">Catch ❤️ 5 hearts to unlock something special!</div>
+
+  <div id="proposal">
+    I LOVE YOUUUU ❤️❤️❤️ <br>
+    Will you be mine forever? 🥹💍
+  </div>
+
+  <script>
+    let score = 0;
+
+    function createHeart() {
+      const heart = document.createElement("div");
+      heart.innerHTML = "❤️";
+      heart.classList.add("heart");
+      heart.style.left = Math.random() * window.innerWidth + "px";
+      document.body.appendChild(heart);
+
+      heart.onclick = () => {
+        score++;
+        heart.remove();
+        if (score === 5) showProposal();
+      };
+
+      setTimeout(() => heart.remove(), 5000);
+    }
+
+    function showProposal() {
+      document.getElementById("game").style.display = "none";
+      document.getElementById("proposal").style.display = "block";
+
+      for (let i = 0; i < 20; i++) {
+        const floatHeart = document.createElement("div");
+        floatHeart.innerHTML = "💖";
+        floatHeart.classList.add("floating");
+        floatHeart.style.left = Math.random() * window.innerWidth + "px";
+        floatHeart.style.bottom = "0px";
+        document.body.appendChild(floatHeart);
+      }
+    }
+
+    setInterval(createHeart, 800);
+  </script>
+
+</body>
+</html>
