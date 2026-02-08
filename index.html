@@ -2,50 +2,58 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Proposal Day 💖</title>
+  <title>Just One Question 💕</title>
   <style>
     body {
       margin: 0;
       font-family: 'Comic Sans MS', cursive;
-      background: linear-gradient(to top right, #ff9a9e, #fad0c4);
-      text-align: center;
+      background: linear-gradient(to bottom, #ffb6c1, #ffe4e1);
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       overflow: hidden;
+      text-align: center;
+    }
+
+    .box {
+      background: rgba(255,255,255,0.3);
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
     }
 
     h1 {
-      font-size: 3rem;
+      font-size: 2.5rem;
       color: #fff;
-      margin-top: 40px;
     }
 
-    #game {
-      margin-top: 30px;
-      font-size: 1.5rem;
+    button {
+      margin-top: 20px;
+      padding: 15px 30px;
+      font-size: 1.2rem;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      background: #ff4d6d;
       color: white;
     }
 
-    .heart {
-      position: absolute;
-      font-size: 2.5rem;
-      cursor: pointer;
-      animation: fall 5s linear;
+    button:hover {
+      background: #ff1e4d;
     }
 
-    @keyframes fall {
-      0% { top: -50px; }
-      100% { top: 100vh; }
-    }
-
-    #proposal {
+    #answer {
       display: none;
       font-size: 3rem;
-      color: #fff;
-      animation: fly 2s ease-in-out forwards;
+      color: white;
+      margin-top: 30px;
+      animation: fly 2s ease forwards;
     }
 
     @keyframes fly {
       from {
-        transform: translateY(300px);
+        transform: translateY(200px);
         opacity: 0;
       }
       to {
@@ -54,65 +62,50 @@
       }
     }
 
-    .floating {
+    .heart {
       position: absolute;
       font-size: 2rem;
-      animation: floatUp 6s infinite;
+      animation: float 5s linear infinite;
     }
 
-    @keyframes floatUp {
-      0% { transform: translateY(0); opacity: 1; }
-      100% { transform: translateY(-600px); opacity: 0; }
+    @keyframes float {
+      0% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-600px);
+        opacity: 0;
+      }
     }
   </style>
 </head>
 <body>
 
-  <h1>Hey Love 😘</h1>
-  <div id="game">Catch ❤️ 5 hearts to unlock something special!</div>
-
-  <div id="proposal">
-    I LOVE YOUUUU ❤️❤️❤️ <br>
-    Will you be mine forever? 🥹💍
+  <div class="box">
+    <h1>Do you know who loves you the most? 🤭</h1>
+    <button onclick="showLove()">Reveal Answer</button>
+    <div id="answer">ME 😌❤️<br>I LOVE YOUUUU ❤️❤️❤️</div>
   </div>
 
   <script>
-    let score = 0;
+    function showLove() {
+      document.getElementById("answer").style.display = "block";
 
-    function createHeart() {
-      const heart = document.createElement("div");
-      heart.innerHTML = "❤️";
-      heart.classList.add("heart");
-      heart.style.left = Math.random() * window.innerWidth + "px";
-      document.body.appendChild(heart);
+      for (let i = 0; i < 25; i++) {
+        const heart = document.createElement("div");
+        heart.innerHTML = "❤️";
+        heart.classList.add("heart");
+        heart.style.left = Math.random() * window.innerWidth + "px";
+        heart.style.bottom = "0px";
+        document.body.appendChild(heart);
 
-      heart.onclick = () => {
-        score++;
-        heart.remove();
-        if (score === 5) showProposal();
-      };
-
-      setTimeout(() => heart.remove(), 5000);
-    }
-
-    function showProposal() {
-      document.getElementById("game").style.display = "none";
-      document.getElementById("proposal").style.display = "block";
-
-      for (let i = 0; i < 20; i++) {
-        const floatHeart = document.createElement("div");
-        floatHeart.innerHTML = "💖";
-        floatHeart.classList.add("floating");
-        floatHeart.style.left = Math.random() * window.innerWidth + "px";
-        floatHeart.style.bottom = "0px";
-        document.body.appendChild(floatHeart);
+        setTimeout(() => heart.remove(), 5000);
       }
     }
-
-    setInterval(createHeart, 800);
   </script>
 
 </body>
-</html
+</html>
 
   
